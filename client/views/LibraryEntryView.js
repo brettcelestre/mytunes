@@ -9,9 +9,8 @@ var LibraryEntryView = Backbone.View.extend({
     'click': function() {
       this.model.play();
 
-      // Send to SongQueue
-      // Maybe use .add
-      this.set('songQueue', this.model);
+      // Send this song(model) to SongQueue
+      this.model.enqueue();
 
 
 
