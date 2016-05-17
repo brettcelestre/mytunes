@@ -14,8 +14,11 @@ var SongModel = Backbone.Model.extend({
 
   //this ended function starts the next song in the queue
   ended: function () {
+    // This sends the 'ended' even to AppModel, which is listening for it
     this.trigger('ended', this);
-    console.log('song ended');
+    
+    console.log('song ended YO');
+
   }
 
 });

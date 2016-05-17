@@ -15,22 +15,46 @@ var AppModel = Backbone.Model.extend({
     getting called from the window (unless we override it, as we do here). */
 
 
-    params.library.on('play', function(song){
-      this.set('currentSong', song);
-    }, this);
-
     // Library has listener for enqueue which tells the app model to 
     params.library.on('enqueue', function(song){
-      // add the song that was clicked to the songQuene collection
-      this.get('songQueue').add(song);
-      console.log('Enqueue after adding: ', this.get('songQueue'));
+      // This grabs 'songQueue' and pushes this song into it
+      this.get('songQueue').push(song);
+    // Don't forget to bind it with this
     }, this);
 
-    //listen to library on ended
+
+    // This grabs songQueue and listens for an add event
+    this.get('songQueue').on('add', function(){
+      console.log('song has been added');
+      console.log('Enqueue after adding: ', this);
+    }, this);
+
+    // Use .get to grab 'songQueue' and listen for 'playFirst' to be invoked
+    this.get('songQueue').on('playFirst', function(){
+      // Set the currentSong to the first song inside of our songQueue
+      this.set('currentSong', this.get('songQueue').at(0));
+    // Don't forget to bind it with this
+    }, this);
+
+
+    // Listens to the play event
+    params.library.on('play', function(song){
+      if ( this.get('songQueue').length === 0 ){
+        // Sets the currentSong to this song
+        this.set('currentSong', song);
+      }
+    }, this);
+
+
+    // listen to library for the 'ended' event
     params.library.on('ended', function(song){
-      // change current song to first song in enqueue
-      console.log('Ended before using pop: ', this.get('songQueue'));
-      this.set('currentSong', this.get('songQueue').pop());
+      console.log("'before shift this.get('songQueue').length'", this.get('songQueue').length);
+      // When a song ends, take the first song off the list
+      this.get('songQueue').shift()
+      // change current song to new first song in enqueue
+      this.set('currentSong', this.get('songQueue').at(0));
+      // console.log('Ended after using pop: ', this.get('songQueue'));
+      console.log("'after shift this.get('songQueue').length'", this.get('songQueue').length);
     }, this);
   }
 
