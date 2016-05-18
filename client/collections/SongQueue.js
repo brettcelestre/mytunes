@@ -2,30 +2,20 @@
 var SongQueue = Songs.extend({
 
   initialize: function(){
+    // Tracks an add event
     this.on('add', function() {
-      console.log('added from within songQueue', this.length);
+      // If this is the first song in songQueue
       if  (this.length === 1) {
+        // We play the song
         this.playFirst();
       }
-        
     });
-
-    // stored song queue
-
-
-    // Add listening for songQueue
-      // this.set('currentSong', new SongModel());
-
-    // params.library.on('play', function(song){
-    //   this.set('currentSong', song);
-    // }, this);
   },
 
-  // playFirst 
+  // playFirst triggers the playFirst event which appModel is listening for
   playFirst: function(){
     // tells AppModel to play fist song in queue and shift it off
     this.trigger('playFirst', this);
-    //console.log('playFirst works');
   }
 
 });

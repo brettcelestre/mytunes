@@ -4,6 +4,7 @@ var LibraryView = Backbone.View.extend({
   tagName: "table",
 
   initialize: function() {
+    // Invokes render
     this.render();
   },
 
@@ -12,8 +13,10 @@ var LibraryView = Backbone.View.extend({
     // see http://api.jquery.com/detach/
     this.$el.children().detach();
 
+    // Builds DOM for everything in our  songQueue collection
     this.$el.html('<th>Library</th>').append(
       this.collection.map(function(song){
+        // Creates a new LibraryEntryView with all of the current songQueue songs
         return new LibraryEntryView({model: song}).render();
       })
     );

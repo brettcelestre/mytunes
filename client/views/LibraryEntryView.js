@@ -6,15 +6,12 @@ var LibraryEntryView = Backbone.View.extend({
   template: _.template('<td>(<%= artist %>)</td><td><%= title %></td>'),
 
   events: {
+    // Creates a tracker for 'click', invokes an anonymous function that..
     'click': function() {
+      // Invokes the play function for this selected model (song)
       this.model.play();
-
-      // Send this song(model) to SongQueue
+      // Invokes the enqueue function for this selected model (song)
       this.model.enqueue();
-
-
-
-      //this.songQueue = new SongQueue({model: this.model.get('currentSong')});
     }
   },
 

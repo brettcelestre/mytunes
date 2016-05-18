@@ -6,8 +6,6 @@ var PlayerView = Backbone.View.extend({
   el: '<audio controls autoplay />',
 
   initialize: function() {
-    // this.on('ended', this.model.ended, this);
-
   },
 
   // This object will be passed to delegateEvents which makes a DOM element of this view listen to this events and do the corresponding function
@@ -21,18 +19,20 @@ var PlayerView = Backbone.View.extend({
     //   }
   },
 
+  // setSong sets the current model to the selected song
   setSong: function(song){
     this.model = song;
+    // Then renders the DOM
     this.render();
   },
 
   // endSong function calls the .ended() function up our model chain. SongModel --> AppModel
   endSong: function(){
-    console.log('endSong');
     this.model.ended()
   },
 
   render: function(){
+    // This changes the <audio> element by adding an src attribute and setting its url to the current song models url
     return this.$el.attr('src', this.model ? this.model.get('url') : '');
   }
 
